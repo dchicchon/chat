@@ -1,3 +1,0 @@
-[submodule "server"]
-	path = server
-	url = https://git.heroku.com/chat-app-server-chicchon.git
