@@ -12,9 +12,9 @@ import {
 } from "@material-ui/core";
 
 const ChatRoom = () => {
-  // const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
+  const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
   // const SERVER = "http://10.0.0.119:5000"; get this based on computer working on
-  const SERVER = "http://10.0.0.37:5000";
+  // const SERVER = "http://10.0.0.37:5000";
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState("");
