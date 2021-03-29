@@ -8,7 +8,10 @@ import {
   Button,
 } from "@material-ui/core";
 
-const Login = () => {
+import {useHistory} from 'react-router-dom'
+
+
+const Login = (props) => {
   const [userName, setUserName] = useState("");
 
   const useStyles = makeStyles((theme) => ({
@@ -20,12 +23,14 @@ const Login = () => {
       margin: "25px 0",
     },
   }));
+  const history = useHistory()
 
   const login = (e) => {
     e.preventDefault();
     console.log("User loggin on ");
-    console.log(userName);
-    // history.push('/')
+    console.log(props)
+    props.setUser(userName)
+    history.push("/")
   };
 
   const classes = useStyles();

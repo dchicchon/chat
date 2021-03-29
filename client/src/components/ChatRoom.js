@@ -11,10 +11,13 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
-const ChatRoom = () => {
-  const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
-  // const SERVER = "http://10.0.0.119:5000"; get this based on computer working on
-  // const SERVER = "http://10.0.0.37:5000";
+const ChatRoom = (props) => {
+  // const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
+  // get this based on computer working on
+  // LAPTOP
+  // const SERVER = "http://10.0.0.119:5000";
+  // DESKTOP
+  const SERVER = "http://10.0.0.37:5000";
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState("");
@@ -62,8 +65,8 @@ const ChatRoom = () => {
 
     socket.emit("send-message", {
       text: newMessage,
-      date: new Date(),
-      sender: "Danny",
+      date: new Date().toDateString(),
+      sender: props.user,
     });
     setNewMessage("");
   };

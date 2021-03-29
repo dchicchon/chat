@@ -7,10 +7,7 @@ const io = require("socket.io")(http, {
 });
 
 let users = 0;
-let messages = [
-  { text: "Hello There!", sender: "Danny", date: new Date().toDateString() },
-  { text: "How are you?", sender: "Danny", date: new Date().toDateString() },
-];
+let messages = [];
 
 app.get("/", (req, res) => {
   res.send("Welcome to the server!");
