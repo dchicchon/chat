@@ -23,6 +23,9 @@ io.on("connection", (socket) => {
   // On receiving a message
   socket.on("send-message", (data) => {
     console.log(data);
+    if (messages.length > 50) {
+      messages.shift()
+    }
     messages.push(data)
     io.emit("receiving-message", data);
   });
