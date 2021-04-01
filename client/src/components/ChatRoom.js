@@ -15,54 +15,64 @@ import {
 } from "@material-ui/core";
 
 const MessageList = (props) => {
-  const messagesEndRef = useRef(null)
+  const messagesEndRef = useRef(null);
   const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-  }
-  const useStyles = makeStyles(theme => ({
-
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+  const useStyles = makeStyles((theme) => ({
     message: {
-      width: 'fit-content',
-      alignSelf: 'flex-start'
+      width: "fit-content",
+      alignSelf: "flex-start",
     },
-    messageUser: {
+    ghostMessage: {
+      height: "56px",
     },
     messageDate: {
-      fontSize: '11px',
-      marginLeft: '5px',
-      color: 'grey'
+      fontSize: "11px",
+      marginLeft: "5px",
+      color: "grey",
     },
     messageText: {
-      color: 'black'
+      color: "black",
     },
     list: {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '600px',
-      overflow: 'auto',
-    }
-  }))
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      overflow: "auto",
+    },
+  }));
 
-  const classes = useStyles()
+  const classes = useStyles();
   useEffect(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, [props.messages]);
 
   let list = props.messages;
   list = list.map((m, i) => (
-    <ListItem key={i} className={classes.message} >
+    <ListItem key={i} className={classes.message}>
       <ListItemText
         primary={
           <React.Fragment>
             <Typography component="span">{m.sender}</Typography>
-            <Typography className={classes.messageDate} component='span'> {m.date}</Typography>
+            <Typography className={classes.messageDate} component="span">
+              {" "}
+              {m.date}
+            </Typography>
           </React.Fragment>
         }
-        secondary={<Typography className={classes.messageText}>{m.text}</Typography>}
+        secondary={
+          <Typography className={classes.messageText}>{m.text}</Typography>
+        }
       />
     </ListItem>
   ));
-  return <List className={classes.list} disablePadding={true}>{props.loading ? <CircularProgress /> : list} <div ref={messagesEndRef} /> </List>;
+  return (
+    <List className={classes.list} disablePadding={true}>
+      {props.loading ? <CircularProgress /> : list}{" "}
+      <div className={classes.ghostMessage} ref={messagesEndRef} />{" "}
+    </List>
+  );
 };
 
 const ChatRoom = (props) => {
@@ -77,7 +87,7 @@ const ChatRoom = (props) => {
   const [newMessage, setNewMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [numUsers, setNumUsers] = useState(0);
-  const inputMessageRef = useRef(null)
+  const inputMessageRef = useRef(null);
 
   // const messagesEndRef = useRef(null)
   // const scrollToBottom = () => {
@@ -131,28 +141,40 @@ const ChatRoom = (props) => {
       date: new Date().toDateString(),
       sender: props.user,
     });
-    console.log(inputMessageRef)
-    inputMessageRef.current.focus()
+    console.log(inputMessageRef);
+    inputMessageRef.current.focus();
     setNewMessage("");
-
   };
   const useStyles = makeStyles((theme) => ({
     header: {
-      marginLeft: '25px'
+      marginLeft: "25px",
+    },
+    heading: {
+      position: "fixed",
+      top: "0",
+      background: "white",
+      paddingTop: "10px",
+      zIndex: "100",
+      width: "100%",
     },
     container: {
-      spacing: 2,
       marginTop: "10px",
-      padding: 0
+      padding: 0,
     },
     userNum: {
-      marginLeft: '25px'
+      marginLeft: "25px",
+    },
+    messageList: {
+      // height: "90%",
+      position: "relative",
+      // zIndex: "-1",
     },
     inputMessage: {
-      position:'absolute',
-      zIndex:'100',
-      bottom:'0'
-      // marginTop: "25px",
+      position: "fixed",
+      background: "white",
+      zIndex: "100",
+      bottom: "0",
+      width: "100%",
     },
   }));
 
@@ -161,30 +183,37 @@ const ChatRoom = (props) => {
   return (
     <>
       <Container maxWidth="md" className={classes.container}>
-        <div>
-          <Typography variant="h4" className={classes.header} component='span'>Chat App</Typography>
-          <Typography variant="h6" className={classes.userNum} component='span'>Current Users {numUsers}</Typography>
+        <div className={classes.heading}>
+          <Typography variant="h5" className={classes.header} component="span">
+            Chat
+          </Typography>
+          <Typography variant="h6" className={classes.userNum} component="span">
+            Current Users {numUsers}
+          </Typography>
+          <Divider />
         </div>
-        <Divider />
-        <div>
-          <MessageList messages={messageList} loading={loading} user={props.user} />
-          <div className={classes.inputMessage}>
-            <TextField
-              variant='outlined'
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              label="Message"
-              inputRef={inputMessageRef}
-            />
-            <Button onClick={sendMessage} color="primary" variant="contained">
-              Send
-        </Button>
-          </div>
+        <div className={classes.messageList}>
+          <MessageList
+            messages={messageList}
+            loading={loading}
+            user={props.user}
+          />
+        </div>
+        <div className={classes.inputMessage}>
+          <TextField
+            variant="outlined"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            label="Message"
+            inputRef={inputMessageRef}
+          />
+          <Button onClick={sendMessage} color="primary" variant="contained">
+            Send
+          </Button>
         </div>
       </Container>
     </>
   );
 };
-
 
 export default ChatRoom;
