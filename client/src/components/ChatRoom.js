@@ -24,6 +24,9 @@ const MessageList = (props) => {
       width: "fit-content",
       alignSelf: "flex-start",
     },
+    ghostMessageHeader: {
+      height: "46px",
+    },
     ghostMessage: {
       height: "56px",
     },
@@ -45,6 +48,7 @@ const MessageList = (props) => {
 
   const classes = useStyles();
   useEffect(() => {
+    console.log("Rerender Message list");
     scrollToBottom();
   }, [props.messages]);
 
@@ -69,8 +73,9 @@ const MessageList = (props) => {
   ));
   return (
     <List className={classes.list} disablePadding={true}>
-      {props.loading ? <CircularProgress /> : list}{" "}
-      <div className={classes.ghostMessage} ref={messagesEndRef} />{" "}
+      <div className={classes.ghostMessageHeader} />
+      {props.loading ? <CircularProgress /> : list}
+      <div className={classes.ghostMessage} ref={messagesEndRef} />
     </List>
   );
 };
@@ -96,9 +101,8 @@ const ChatRoom = (props) => {
 
   useEffect(() => {
     console.log("Start Client");
+    console.log("Render chat room");
     initializeSocket();
-    // scrollToBottom()
-    // return socket.disconnect();
   }, []);
 
   // initialize connection
@@ -141,7 +145,6 @@ const ChatRoom = (props) => {
       date: new Date().toDateString(),
       sender: props.user,
     });
-    console.log(inputMessageRef);
     inputMessageRef.current.focus();
     setNewMessage("");
   };
