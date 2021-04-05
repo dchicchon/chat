@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "client-deploy":"cd client && npm run deploy",
     "dev": "concurrently --kill-others \"npm run client\" \"nodemon run server\"",
     "client": "cd client && npm start",
-    "server": "cd server && node app.js",
+    "server": "cd server && node index.js",
     "heroku-deploy": "git subtree push --prefix server heroku master"
   },
   "keywords": [],
