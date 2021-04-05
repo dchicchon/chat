@@ -5,7 +5,6 @@ import {
   Typography,
   TextField,
   Button,
-  Paper,
   makeStyles,
   List,
   ListItem,
@@ -48,7 +47,7 @@ const MessageList = (props) => {
 
   const classes = useStyles();
   useEffect(() => {
-    console.log("Rerender Message list");
+    // console.log("Rerender Message list");
     scrollToBottom();
   }, [props.messages]);
 
@@ -82,6 +81,7 @@ const MessageList = (props) => {
 
 const ChatRoom = (props) => {
   const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
+  // const SERVER = 'http://localhost:5000'
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState("");
@@ -90,25 +90,29 @@ const ChatRoom = (props) => {
   const inputMessageRef = useRef(null); // used to scroll to bottom of messages
 
   useEffect(() => {
-    console.log("Start Client");
-    console.log("Render chat room");
     initializeSocket();
   }, []);
 
   // initialize connection
   const initializeSocket = () => {
     // console.log("Connect to Heroku Server");
-    let newSocket = io(SERVER);
+    let newSocket = io(SERVER, {
+      query: {
+        user: props.user
+      }
+    });
     setSocket(newSocket);
     // When new user connects, send data
     newSocket.on("new-user", (data) => {
+      console.log(data)
       setMessageList(data["messages"]);
       setNumUsers(data["users"]);
       setLoading(false);
     });
     // Receiving message from server
-    newSocket.on("user-disconnected", (users) => {
-      setNumUsers(users);
+    newSocket.on("user-disconnected", (data) => {
+      setNumUsers(data['users']);
+      setMessageList(data['messages'])
     });
     // Add Message to our current list
     newSocket.on("receiving-message", (message) => {
@@ -173,8 +177,14 @@ const ChatRoom = (props) => {
     }
   }));
 
-  const classes = useStyles();
 
+  const handleMessage = (e) => {
+    e.preventDefault()
+    console.log("Typing in Input")
+    setNewMessage(e.target.value)
+  }
+
+  const classes = useStyles();
   return (
     <>
       <Container maxWidth="md" className={classes.container}>
@@ -199,7 +209,7 @@ const ChatRoom = (props) => {
             variant="outlined"
             value={newMessage}
             className={classes.input}
-            onChange={(e) => setNewMessage(e.target.value)}
+            onChange={handleMessage}
             label="Message"
             inputRef={inputMessageRef}
           />

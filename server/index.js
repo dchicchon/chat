@@ -15,9 +15,14 @@ app.get("/", (req, res) => {
 
 // io is server, socket is each user?
 io.on("connection", (socket) => {
-  console.log("A user connected");
   users++;
-
+  console.log("A user connected");
+  let user = socket.handshake.query.user
+  messages.push({
+    text: `Welcome to the Chat ${user}!`,
+    date: new Date().toDateString,
+    sender: "ChatBot",
+  })
   io.emit("new-user", { users, messages });
 
   // On receiving a message
@@ -32,8 +37,12 @@ io.on("connection", (socket) => {
   socket.on("disconnect", (socket) => {
     console.log("A user disconnected");
     users--;
-    console.log(users);
-    io.emit("user-disconnected", users);
+    messages.push({
+      text: `${user} has left the chat`,
+      date: new Date().toDateString,
+      sender: "ChatBot",
+    })
+    io.emit("user-disconnected", {users, messages});
   });
 });
 
