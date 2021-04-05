@@ -80,8 +80,8 @@ const MessageList = (props) => {
 };
 
 const ChatRoom = (props) => {
-  const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
-  // const SERVER = 'http://localhost:5000'
+  // const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
+  const SERVER = 'http://localhost:5000'
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState("");
@@ -104,7 +104,7 @@ const ChatRoom = (props) => {
     setSocket(newSocket);
     // When new user connects, send data
     newSocket.on("new-user", (data) => {
-      console.log(data)
+      // console.log(data)
       setMessageList(data["messages"]);
       setNumUsers(data["users"]);
       setLoading(false);
@@ -115,11 +115,9 @@ const ChatRoom = (props) => {
       setMessageList(data['messages'])
     });
     // Add Message to our current list
-    newSocket.on("receiving-message", (message) => {
-      setMessageList((messageList) => [...messageList, message]);
+    newSocket.on("receiving-message", (messages) => {
+      setMessageList(messages);
     });
-
-    // return newSocket.close();
   };
 
   const sendMessage = () => {
@@ -180,7 +178,7 @@ const ChatRoom = (props) => {
 
   const handleMessage = (e) => {
     e.preventDefault()
-    console.log("Typing in Input")
+    // console.log("Typing in Input")
     setNewMessage(e.target.value)
   }
 

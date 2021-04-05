@@ -21,7 +21,12 @@ const Login = (props) => {
     },
     input: {
       margin: "25px 0",
+      borderBottom :'1px solid white',
+      '&::placeholder': {
+        color:'white'
+      }
     },
+
   }));
   const history = useHistory()
 
@@ -47,8 +52,10 @@ const Login = (props) => {
         <Typography variant="h5">Login</Typography>
         <TextField
           className={classes.input}
-          placeholder="Username"
+          label="Username"
+          // placeholder="Username"
           value={userName}
+          // InputProps={{classes: {input: classes.input}}}
           onChange={(e) => setUserName(e.target.value)}
         />
         <Button variant="contained" color="primary" onClick={login}>
