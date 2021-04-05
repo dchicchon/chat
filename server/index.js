@@ -14,10 +14,7 @@ const pool = new Pool({
   port: 5432
 })
 
-// console.log(pool)
-
 let users = 0;
-
 app.get("/", (req, res) => {
   res.send("Welcome to the server!");
 });
