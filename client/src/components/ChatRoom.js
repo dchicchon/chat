@@ -87,12 +87,7 @@ const ChatRoom = (props) => {
   const [newMessage, setNewMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const [numUsers, setNumUsers] = useState(0);
-  const inputMessageRef = useRef(null);
-
-  // const messagesEndRef = useRef(null)
-  // const scrollToBottom = () => {
-  //   messagesEndRef.current.scrollIntoView({ behavior: 'smooth' })
-  // }
+  const inputMessageRef = useRef(null); // used to scroll to bottom of messages
 
   useEffect(() => {
     console.log("Start Client");
@@ -107,21 +102,16 @@ const ChatRoom = (props) => {
     setSocket(newSocket);
     // When new user connects, send data
     newSocket.on("new-user", (data) => {
-      console.log("A user connected to the server");
-      console.log("Current Users:", data["users"]);
-      console.log("Messages:", data["messages"]);
       setMessageList(data["messages"]);
       setNumUsers(data["users"]);
       setLoading(false);
     });
     // Receiving message from server
     newSocket.on("user-disconnected", (users) => {
-      console.log("A user disconnected");
-      console.log("Current Users:", users);
       setNumUsers(users);
     });
+    // Add Message to our current list
     newSocket.on("receiving-message", (message) => {
-      // console.log(message);
       setMessageList((messageList) => [...messageList, message]);
     });
 
@@ -133,7 +123,6 @@ const ChatRoom = (props) => {
       console.log("Message must be at least 1 character");
       return;
     }
-    // console.log(newMessage);
 
     socket.emit("send-message", {
       text: newMessage,
@@ -143,6 +132,7 @@ const ChatRoom = (props) => {
     inputMessageRef.current.focus();
     setNewMessage("");
   };
+
   const useStyles = makeStyles((theme) => ({
     header: {
       marginLeft: "25px",
@@ -157,23 +147,30 @@ const ChatRoom = (props) => {
     },
     container: {
       marginTop: "10px",
+      position: 'relative',
       padding: 0,
     },
     userNum: {
       marginLeft: "25px",
     },
     messageList: {
-      // height: "90%",
       position: "relative",
-      // zIndex: "-1",
     },
     inputMessage: {
+      padding: '0',
       position: "fixed",
       background: "white",
       zIndex: "100",
       bottom: "0",
       width: "100%",
     },
+    input: {
+      width: '80%'
+    },
+    button: {
+      width: '20%',
+      height: '56px'
+    }
   }));
 
   const classes = useStyles();
@@ -181,7 +178,7 @@ const ChatRoom = (props) => {
   return (
     <>
       <Container maxWidth="md" className={classes.container}>
-        <div className={classes.heading}>
+        <Container maxWidth='md' className={classes.heading}>
           <Typography variant="h5" className={classes.header} component="span">
             Chat
           </Typography>
@@ -189,7 +186,7 @@ const ChatRoom = (props) => {
             Current Users {numUsers}
           </Typography>
           <Divider />
-        </div>
+        </Container>
         <div className={classes.messageList}>
           <MessageList
             messages={messageList}
@@ -197,18 +194,20 @@ const ChatRoom = (props) => {
             user={props.user}
           />
         </div>
-        <div className={classes.inputMessage}>
+        <Container maxWidth='md' className={classes.inputMessage}>
           <TextField
             variant="outlined"
             value={newMessage}
+            className={classes.input}
             onChange={(e) => setNewMessage(e.target.value)}
             label="Message"
             inputRef={inputMessageRef}
           />
-          <Button onClick={sendMessage} color="primary" variant="contained">
+          <Button onClick={sendMessage} className={classes.button} color="primary" variant="contained">
             Send
           </Button>
-        </div>
+
+        </Container>
       </Container>
     </>
   );
