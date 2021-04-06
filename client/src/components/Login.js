@@ -32,8 +32,6 @@ const Login = (props) => {
 
   const login = (e) => {
     e.preventDefault();
-    console.log("User loggin on ");
-    console.log(props)
     props.setUser(userName)
     history.push("/")
   };
