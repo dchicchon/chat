@@ -12,6 +12,7 @@ const pool = new Pool({
   host: process.env.HOST || 'localhost',
   database: process.env.DATABASE || 'api',
   password: process.env.PASSWORD || 'password',
+  ssl: true,
   port: 5432
 })
 
