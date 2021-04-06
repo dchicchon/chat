@@ -7,10 +7,10 @@ const io = require("socket.io")(http, {
 });
 
 const pool = new Pool({
-  user: 'me',
-  host: 'localhost',
-  database: 'api',
-  password: 'password',
+  user: process.env.USER || 'me',
+  host: process.env.HOST || 'localhost',
+  database: process.env.DATABASE || 'api',
+  password: process.env.PASSWORD || 'password',
   port: 5432
 })
 
