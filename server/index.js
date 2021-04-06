@@ -6,7 +6,6 @@ const io = require("socket.io")(http, {
   cors: "*",
 });
 
-console.log("START SERVER")
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'postgres://me:password@localhost:5432/api',
 })
