@@ -6,6 +6,7 @@ const io = require("socket.io")(http, {
   cors: "*",
 });
 
+console.log("START SERVER")
 const pool = new Pool({
   user: process.env.USER || 'me',
   host: process.env.HOST || 'localhost',
@@ -13,6 +14,8 @@ const pool = new Pool({
   password: process.env.PASSWORD || 'password',
   port: 5432
 })
+
+console.log(pool)
 
 let users = 0;
 app.get("/", (req, res) => {
