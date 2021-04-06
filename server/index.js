@@ -1,5 +1,5 @@
 const app = require("express")();
-const Pool = require("pg").Pool
+const { Pool } = require("pg")
 const http = require("http").Server(app);
 const PORT = process.env.PORT || 5000;
 const io = require("socket.io")(http, {
@@ -8,16 +8,10 @@ const io = require("socket.io")(http, {
 
 console.log("START SERVER")
 const pool = new Pool({
-  user: process.env.USER || 'me',
-  host: process.env.HOST || 'localhost',
-  database: process.env.DATABASE || 'api',
-  password: process.env.PASSWORD || 'password',
-  ssl: true,
-  port: 5432
+  connectionString: process.env.DATABASE_URL || 'postgres://me:password@localhost:5432/api',
 })
 
-console.log(pool)
-
+// pool.connect()
 let users = 0;
 app.get("/", (req, res) => {
   res.send("Welcome to the server!");
