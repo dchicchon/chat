@@ -1,5 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import './App.css'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from "react-router-dom";
 import Login from "./components/Login.js";
 import ChatRoom from "./components/ChatRoom.js";
 
