@@ -80,8 +80,8 @@ const MessageList = (props) => {
 };
 
 const ChatRoom = (props) => {
-  // const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
-  const SERVER = 'http://localhost:5000'
+  const SERVER = "https://chat-app-server-chicchon.herokuapp.com/"; /// deployment
+  // const SERVER = 'http://localhost:5000'
   const [socket, setSocket] = useState(null);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState("");
