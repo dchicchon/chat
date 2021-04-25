@@ -8,7 +8,8 @@
     "dev": "concurrently --kill-others \"npm run client\" \"npm run server\"",
     "client": "cd client && npm start",
     "server": "cd server && node app.js",
-    "heroku-deploy":"git subtree push --prefix server heroku master"
+    "client-deploy": "cd client && npm run deploy",
+    "heroku-deploy": "git subtree push --prefix server heroku master"
   },
   "keywords": [],
   "author": "",

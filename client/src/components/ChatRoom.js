@@ -147,7 +147,7 @@ const ChatRoom = (props) => {
     },
     container: {
       marginTop: "10px",
-      position: 'relative',
+      position: "relative",
       padding: 0,
     },
     userNum: {
@@ -157,7 +157,7 @@ const ChatRoom = (props) => {
       position: "relative",
     },
     inputMessage: {
-      padding: '0',
+      padding: "0",
       position: "fixed",
       background: "white",
       zIndex: "100",
@@ -165,12 +165,12 @@ const ChatRoom = (props) => {
       width: "100%",
     },
     input: {
-      width: '80%'
+      width: "80%",
     },
     button: {
-      width: '20%',
-      height: '56px'
-    }
+      width: "20%",
+      height: "56px",
+    },
   }));
 
   const classes = useStyles();
@@ -178,7 +178,7 @@ const ChatRoom = (props) => {
   return (
     <>
       <Container maxWidth="md" className={classes.container}>
-        <Container maxWidth='md' className={classes.heading}>
+        <Container maxWidth="md" className={classes.heading}>
           <Typography variant="h5" className={classes.header} component="span">
             Chat
           </Typography>
@@ -194,7 +194,7 @@ const ChatRoom = (props) => {
             user={props.user}
           />
         </div>
-        <Container maxWidth='md' className={classes.inputMessage}>
+        <Container maxWidth="md" className={classes.inputMessage}>
           <TextField
             variant="outlined"
             value={newMessage}
@@ -203,10 +203,14 @@ const ChatRoom = (props) => {
             label="Message"
             inputRef={inputMessageRef}
           />
-          <Button onClick={sendMessage} className={classes.button} color="primary" variant="contained">
+          <Button
+            onClick={sendMessage}
+            className={classes.button}
+            color="primary"
+            variant="contained"
+          >
             Send
           </Button>
-
         </Container>
       </Container>
     </>

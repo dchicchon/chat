@@ -24,9 +24,9 @@ io.on("connection", (socket) => {
   socket.on("send-message", (data) => {
     console.log(data);
     if (messages.length > 50) {
-      messages.shift()
+      messages.shift();
     }
-    messages.push(data)
+    messages.push(data);
     io.emit("receiving-message", data);
   });
   socket.on("disconnect", (socket) => {
